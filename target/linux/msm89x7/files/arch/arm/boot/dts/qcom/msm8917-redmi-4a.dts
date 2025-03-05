@@ -1,0 +1,58 @@
+/dts-v1/;
+#include "msm8917.dtsi"
+
+/ {
+    model = "Xiaomi Redmi 4A";
+    compatible = "xiaomi,redmi-4a", "qcom,msm8917";
+
+    aliases {
+        serial0 = &blsp1_uart2;
+    };
+
+    chosen {
+        stdout-path = "serial0:115200n8";
+    };
+
+    memory {
+        device_type = "memory";
+        reg = <0x80000000 0x40000000>;  // 1GB RAM
+    };
+
+    cpus {
+        #address-cells = <1>;
+        #size-cells = <0>;
+    };
+};
+
+/* UART (serial console) */
+&blsp1_uart2 {
+    status = "okay";
+};
+
+/* eMMC storage */
+&sdhc_1 {
+    status = "okay";
+};
+
+/* USB Controller */
+&usb {
+    status = "okay";
+    dr_mode = "otg";  /* Enable USB OTG */
+    vbus-supply = <&pm8941_usb_vbus>;
+};
+
+/* USB-to-LAN Gigabit Support */
+&usb_hs {
+    status = "okay";
+    compatible = "qcom,dwc3";
+    dr_mode = "host";
+
+    usb_phy: phy {
+        status = "okay";
+        compatible = "qcom,usb-phy";
+    };
+};
+
+&usb_hsic {
+    status = "okay";
+};
