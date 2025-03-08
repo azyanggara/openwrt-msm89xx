@@ -17,16 +17,89 @@
         device_type = "memory";
         reg = <0x80000000 0x80000000>;  // 2GB RAM
     };
+};
 
-    cpus {
-        #address-cells = <1>;
-        #size-cells = <0>;
-    };
+/* CPU Configuration */
+&cpus {
+    #address-cells = <1>;
+    #size-cells = <0>;
+
+    cpu@0 { device_type = "cpu"; compatible = "arm,cortex-a53"; reg = <0>; };
+    cpu@1 { device_type = "cpu"; compatible = "arm,cortex-a53"; reg = <1>; };
+    cpu@2 { device_type = "cpu"; compatible = "arm,cortex-a53"; reg = <2>; };
+    cpu@3 { device_type = "cpu"; compatible = "arm,cortex-a53"; reg = <3>; };
+    cpu@4 { device_type = "cpu"; compatible = "arm,cortex-a53"; reg = <4>; };
+    cpu@5 { device_type = "cpu"; compatible = "arm,cortex-a53"; reg = <5>; };
+    cpu@6 { device_type = "cpu"; compatible = "arm,cortex-a53"; reg = <6>; };
+    cpu@7 { device_type = "cpu"; compatible = "arm,cortex-a53"; reg = <7>; };
 };
 
 /* UART (serial console) */
 &blsp1_uart2 {
     status = "okay";
+};
+
+/* ✨ WiFi WCN36xx (SDIO, IRQ 90 & 91) */
+&wcnss {
+    status = "okay";
+
+    wifi {
+        compatible = "qcom,wcn36xx";
+        qcom,ath10k-calibration-variant = "redmi-4x";
+        vdd-io-supply = <&pmic_3p3>;
+        vdd-1p8-supply = <&pmic_1p8>;
+        vdd-3p3-supply = <&pmic_3p3>;
+    };
+};
+
+&sdio0 {
+    status = "okay";
+
+    wlan@1 {
+        reg = <1>;
+        compatible = "qcom,wcn3660";
+        interrupt-parent = <&tlmm>;
+        interrupts = <90 0>, <91 0>; /* Perbaikan: Menggunakan IRQ yang benar */
+        vmmc-supply = <&pmic_3p3>;
+        vqmmc-supply = <&pmic_1p8>;
+        bus-width = <4>;
+        non-removable;
+    };
+};
+
+/* ✨ Modem LTE (MDM9607, UART) */
+&blsp1_uart1 {
+    status = "okay";
+    pinctrl-names = "default";
+    pinctrl-0 = <&pinctrl_uart1>;
+    uart-has-rtscts;
+};
+
+&blsp1_uart2 {
+    status = "okay";
+    pinctrl-names = "default";
+    pinctrl-0 = <&pinctrl_uart2>;
+    qcom,mode = "gsbi";
+};
+
+&blsp1_uart3 {
+    status = "okay";
+    pinctrl-names = "default";
+    pinctrl-0 = <&pinctrl_uart3>;
+    qcom,mode = "bam";
+};
+
+&mdm9607 {
+    status = "okay";
+
+    modem {
+        compatible = "qcom,mdm9607";
+        qcom,modem-mode = "qmi";
+        qcom,qrtr-mode = "ipc";
+        vdd-supply = <&pmic_3p3>;
+        wake-gpio = <&tlmm 30 0>;
+        reset-gpio = <&tlmm 31 0>;
+    };
 };
 
 /* eMMC storage */
