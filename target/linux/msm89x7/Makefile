@@ -20,3 +20,5 @@ include $(wildcard $(SUBTARGET_DIR)/image/*.mk)
 
 # Pastikan setiap perangkat yang terdaftar di dalam .mk dibangun dengan benar
 $(eval $(call BuildTarget))
+
+KERNEL_PATCHVER:=5.15
