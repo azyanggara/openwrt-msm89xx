@@ -1,10 +1,3 @@
-define Target/msm89xx
-  ARCH:=arm
-  BOARDNAME:=Qualcomm MSM89xx (32-bit)
-  SUBTARGETS:=generic
-endef
-TARGETS += msm89xx
-
 define Target/msm89x7
   ARCH:=aarch64
   BOARDNAME:=Qualcomm MSM89x7 (64-bit)
