@@ -3,6 +3,7 @@ include $(TOPDIR)/rules.mk
 BOARDNAME:=Qualcomm MSM89x7 (64-bit)
 SUBTARGETS:=msm8917
 ARCH:=aarch64
+KERNEL_PATCHVER:=5.15
 FEATURES:=dt overlays gpio nand rtc squashfs usb ext4 wifi
 
 include $(INCLUDE_DIR)/target.mk
@@ -20,5 +21,3 @@ include $(wildcard $(SUBTARGET_DIR)/image/*.mk)
 
 # Pastikan setiap perangkat yang terdaftar di dalam .mk dibangun dengan benar
 $(eval $(call BuildTarget))
-
-KERNEL_PATCHVER:=5.15
