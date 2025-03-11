@@ -17,9 +17,8 @@ DEFAULT_PACKAGES += kmod-usb-core kmod-usb2 kmod-usb3 \
     kmod-usb-acm kmod-usb-wdm umbim
 
 # Memasukkan semua file .mk dalam folder image (termasuk santoni.mk & rolex.mk)
-TARGET_DIR := $(CURDIR)
-include $(wildcard $(TARGET_DIR)/image/*.mk)
-
+TARGET_DIR := $(dir $(lastword $(MAKEFILE_LIST)))
+include $(wildcard $(TARGET_DIR)image/*.mk)
 
 # Pastikan setiap perangkat yang terdaftar di dalam .mk dibangun dengan benar
 $(eval $(call BuildTarget))
