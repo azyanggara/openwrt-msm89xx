@@ -1,6 +1,6 @@
 include $(TOPDIR)/rules.mk
 
-BOARDNAME:=Qualcomm MSM89x7 (64-bit)
+BOARDNAME:=Qualcomm MSM89x7 64-bit
 SUBTARGETS:=msm8917
 ARCH:=aarch64
 KERNEL_PATCHVER:=5.15
